@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('skill')"></nav>
+<h2>Skills</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Rating</th>
+    </tr>
+    <tr th:each="skill : ${skills}">
+        <td th:text="${skill.title}"></td>
+        <td th:text="${skill.rating}"></td>
+        <td>
+            <a th:href="@{/skill/update/{id}(id=${skill.id})}">Update</a> -
+            <a th:href="@{/skill/delete/{id}(id=${skill.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/skill/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

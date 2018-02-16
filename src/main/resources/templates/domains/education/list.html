@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('education')"></nav>
+
+<h2>Education</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Major</th>
+        <th>School Name</th>
+        <th>Graduation Date</th>
+    </tr>
+    <tr th:each="education : ${educations}">
+        <td th:text="${education.title}"></td>
+        <td th:text="${education.major}"></td>
+        <td th:text="${education.schoolName}"></td>
+        <td th:text="${education.graduationDate}"></td>
+        <td>
+            <a th:href="@{/education/update/{id}(id=${education.id})}">Update</a> -
+            <a th:href="@{/education/delete/{id}(id=${education.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/education/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

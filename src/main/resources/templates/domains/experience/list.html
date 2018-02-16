@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('experience')"></nav>
+
+<h2>Experience</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Employer Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Duty</th>
+    </tr>
+    <tr th:each="experience : ${experiences}">
+        <td th:text="${experience.title}"></td>
+        <td th:text="${experience.employerName}"></td>
+        <td th:text="${experience.startDate}"></td>
+        <td th:text="${experience.endDate}"></td>
+        <td th:text="${experience.duty}"></td>
+        <td>
+            <a th:href="@{/experience/update/{id}(id=${experience.id})}">Update</a> -
+            <a th:href="@{/experience/delete/{id}(id=${experience.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/experience/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+
+</body>
+</html>

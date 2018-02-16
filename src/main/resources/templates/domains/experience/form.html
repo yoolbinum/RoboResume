@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('experience')"></nav>
+<form action="#"
+      th:action="@{/experience/process}"
+      th:object="${experience}"
+      method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+    Employer Name: <input type="text" th:field="*{employerName}"/>
+    <span th:if="${#fields.hasErrors('employerName')}"
+          th:errors="*{employerName}"></span><br/>
+
+    Title: <input type="text" th:field="*{title}"/>
+    <span th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}"></span><br/>
+
+    Duty: <input type="text" th:field="*{duty}"/>
+    <span th:if="${#fields.hasErrors('duty')}"
+          th:errors="*{duty}"></span><br/>
+
+    Start Date: <input type="text" th:field="*{startDate}"/>
+    <span th:if="${#fields.hasErrors('startDate')}"
+          th:errors="*{startDate}"></span><br/>
+
+    End Date: <input type="text" th:field="*{endDate}"/>
+    <span th:if="${#fields.hasErrors('endDate')}"
+          th:errors="*{endDate}"></span><br/>
+
+    <br/>
+    <input type="submit" value="Submit"/>
+
+
+</form>
+<div th:replace="common/base :: jslinks"></div>
+
+</body>
+</html>

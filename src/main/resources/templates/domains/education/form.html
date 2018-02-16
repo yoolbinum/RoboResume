@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('education')"></nav>
+<form action="#"
+      th:action="@{/education/process}"
+      th:object="${education}"
+      method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+
+    Title: <input type="text" th:field="*{title}"/>
+    <span th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}"></span><br/>
+
+    Major: <input type="text" th:field="*{major}"/>
+    <span th:if="${#fields.hasErrors('major')}"
+          th:errors="*{major}"></span><br/>
+
+    School Name: <input type="text" th:field="*{schoolName}"/>
+    <span th:if="${#fields.hasErrors('schoolName')}"
+          th:errors="*{schoolName}"></span><br/>
+
+    Graduation Date: <input type="text" th:field="*{graduationDate}"/>
+    <span th:if="${#fields.hasErrors('graduationDate')}"
+          th:errors="*{graduationDate}"></span><br/>
+
+    <br/>
+    <input type="submit" value="Submit"/>
+
+
+</form>
+<div th:replace="common/base :: jslinks"></div>
+
+</body>
+</html>
