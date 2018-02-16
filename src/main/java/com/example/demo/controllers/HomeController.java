@@ -6,7 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
     @RequestMapping("/")
-    public String home(){
+    public String home() {
         return "index";
     }
+
+    @RequestMapping("/summary")
+    public String summary()
+
+    {
+        return "index";
+    }
+
+    @RequestMapping("reference")
+    public String reference(){
+        return "index";
+    }
+
 }
