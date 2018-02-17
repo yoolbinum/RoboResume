@@ -1,14 +1,10 @@
 package com.example.demo.controllers;
 
+import com.example.demo.backend.domains.Resume;
 import com.example.demo.backend.repositories.EducationRepository;
 import com.example.demo.backend.repositories.ExperienceRepository;
 import com.example.demo.backend.repositories.ResumeRepository;
 import com.example.demo.backend.repositories.SkillRepository;
-import com.example.demo.domains.Resume;
-import com.example.demo.repos.EducationRepository;
-import com.example.demo.repos.ExperienceRepository;
-import com.example.demo.repos.ResumeRepository;
-import com.example.demo.repos.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,42 +32,43 @@ public class ResumeController {
     SkillRepository skillRepository;
 
 
-    final private String resumeDir = "/resume/";
+    final private String resumeDir = "domains/resume/";
+    final private String resumeURL = "/resume";
 
-    @RequestMapping(resumeDir)
+    @RequestMapping(resumeURL)
     public String resumesList(Model model){
         model.addAttribute("resumes", resumeRepository.findAll());
         return resumeDir + "list";
     }
 
-    @GetMapping(resumeDir + "add")
+    @GetMapping(resumeURL + "/add")
     public String resumeForm(Model model){
         model.addAttribute("resume", new Resume());
         return resumeDir + "form";
     }
 
-    @PostMapping(resumeDir + "process")
+    @PostMapping(resumeURL + "/process")
     public String processForm(@Valid Resume resume, BindingResult result){
         if(result.hasErrors()){
             return resumeDir + "form";
         }
         resumeRepository.save(resume);
-        return "redirect:" + resumeDir;
+        return "redirect:" + resumeURL;
     }
 
-    @RequestMapping(resumeDir + "detail/{id}")
+    @RequestMapping(resumeURL + "/detail/{id}")
     public String showResume(@PathVariable("id") long id, Model model){
         model.addAttribute("resume", resumeRepository.findOne(id));
         return resumeDir+ "show";
     }
 
-    @RequestMapping(resumeDir + "update/{id}")
+    @RequestMapping(resumeURL + "/update/{id}")
     public String updateResume(@PathVariable("id") long id, Model model){
         model.addAttribute("resume", resumeRepository.findOne(id));
         return resumeDir+ "form";
     }
 
-    @RequestMapping(resumeDir + "/view")
+    @RequestMapping(resumeURL + "/view")
     public String viewResume(Model model){
         model.addAttribute("resumes", resumeRepository.findAll());
         model.addAttribute("experiences", experienceRepository.findAll());

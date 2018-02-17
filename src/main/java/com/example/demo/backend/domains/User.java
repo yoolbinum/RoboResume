@@ -1,32 +1,35 @@
 package com.example.demo.backend.domains;
 
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public long id;
 
-    @Column(name = "password")
+    @NotEmpty
+    @Email
+    private String email;
+
+    @NotEmpty
     private String password;
 
-    @Column(name = "firstName")
-    private String firstName;
-
-    @Column(name ="lastName")
-    private String lastName;
-
-    @Column(name = "enabled")
-    private boolean enabled;
-
-    @Column(name = "username")
+    @NotEmpty
     private String username;
 
-    @Column(name = "role")
+    @NotEmpty
     private String role;
+
+    @ManyToMany(fetch= FetchType.EAGER)
+    private Set<Role> roles;
 
     public String getRole() {
         return role;
@@ -36,19 +39,8 @@ public class User {
         this.role = role;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(joinColumns =  @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
-
     public User() {
-    }
-
-    public User(String password, String firstName, String lastName, boolean enabled, String username) {
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.enabled = enabled;
-        this.username = username;
+        this.roles = new HashSet<>();
     }
 
     public long getId() {
@@ -59,36 +51,20 @@ public class User {
         this.id = id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public String getUsername() {
@@ -99,11 +75,16 @@ public class User {
         this.username = username;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role r)
+    {
+        this.roles.add(r);
     }
 }

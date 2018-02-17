@@ -1,26 +1,25 @@
 package com.example.demo.backend.domains;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    public long id;
 
-    @Column(unique = true)
+    @Column(unique=true)
     private String role;
 
-    public Role(String role) {
-        this.role = role;
-    }
+    @ManyToMany(mappedBy="roles")
+    private List<User> users;
 
     public Role() {
+        this.users = new ArrayList<>();
     }
-
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Collection<User> users;
 
     public long getId() {
         return id;
@@ -30,19 +29,19 @@ public class Role {
         this.id = id;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public Collection<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Collection<User> users) {
-        this.users = users;
     }
 }

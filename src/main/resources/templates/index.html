@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head th:replace="common/base :: head"></head>
 <body>
 <nav th:replace="common/base :: navbar(home)"></nav>
-<h2>Insecure Page</h2>
 
-<a href="/login">Login</a>
+<h1>Welcome to the main page. You should see this as soon as you log in.</h1>
+
+<h3 sec:authorize="hasAuthority('APPLICANT')">You can see this because you are an applicant</h3>
+
+<h3 sec:authorize="hasAuthority('EMPLOYER')">You can see this because you are an employer</h3>
+
+<a href="/logout">Log out</a>
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>

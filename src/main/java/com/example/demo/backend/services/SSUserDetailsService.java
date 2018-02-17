@@ -26,17 +26,19 @@ public class SSUserDetailsService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         try{
-            User user = userRepository.findByUsername(username);
-            if(user == null){
-                return null;
+            User user = userRepository.findUserByUsername(username);
+            if(user==null)
+            {
+                throw new UsernameNotFoundException(username+" not found");
             }
+            System.out.println(user.getUsername()+" is granted access");
+            return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),getAuthorities(user));
 
-            return new org.springframework.security.core.userdetails.User(
-                    user.getUsername(),
-                    user.getPassword(),
-                    getAuthorities(user));
-        }catch (Exception e){
+
+        }catch (Exception e)
+        {
             throw new UsernameNotFoundException("User not found");
+
         }
     }
 
@@ -45,6 +47,7 @@ public class SSUserDetailsService implements UserDetailsService{
         for(Role role: user.getRoles()){
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRole());
             authorities.add(grantedAuthority);
+            System.out.println(grantedAuthority.toString());
         }
 
         return authorities;

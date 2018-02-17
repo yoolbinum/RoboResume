@@ -17,8 +17,13 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("reference")
+    @RequestMapping("/reference")
     public String reference(){
+        return "index";
+    }
+
+    @RequestMapping("/letter")
+    public String letter(){
         return "index";
     }
 
