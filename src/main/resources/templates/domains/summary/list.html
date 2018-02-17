@@ -7,6 +7,7 @@
 <table>
     <tr th:each="summary : ${summaries}">
         <td th:text="${summary.description}"></td>
+        <img th:src="${summary.image}" width="100" height="100" />
         <td>
             <a th:href="@{/summary/update/{id}(id=${summary.id})}">Update</a> -
             <a th:href="@{/summary/delete/{id}(id=${summary.id})}">Delete</a>

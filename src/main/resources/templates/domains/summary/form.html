@@ -14,9 +14,15 @@
     <span th:if="${#fields.hasErrors('description')}"
           th:errors="*{description}"></span><br/>
     <br/>
+
+    <div class="form-group">
+        <label for="bookimage">Image link</label>
+        <input type="url" th:field="*{image}" class="form-control" id="bookimage" aria-describedby="urlHelp" placeholder="Enter image link"/>
+        <small class="form-text text-muted" id="urlHelp">Enter the url of an image you would like to use for this book </small>
+    </div>
+
+
     <input type="submit" value="Submit"/>
-
-
 </form>
 <div th:replace="common/base :: jslinks"></div>
 </body>

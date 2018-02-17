@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('reference')"></nav>
+<h2>Reference</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    <tr th:each="reference : ${references}">
+        <td th:text="${reference.name}"></td>
+        <td th:text="${reference.email}"></td>
+        <td>
+            <a th:href="@{/reference/update/{id}(id=${reference.id})}">Update</a> -
+            <a th:href="@{/reference/delete/{id}(id=${reference.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/reference/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

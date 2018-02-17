@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('reference')"></nav>
+<form action="#"
+      th:action="@{/reference/process}"
+      th:object="${reference}"
+      method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+
+    Name: <input type="text" th:field="*{name}"/>
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"></span><br/>
+
+    Email: <input type="text" th:field="*{email}"/>
+    <span th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"></span><br/>
+
+    <br/>
+    <input type="submit" value="Submit"/>
+
+
+</form>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>
