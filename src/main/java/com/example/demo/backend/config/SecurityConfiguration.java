@@ -36,6 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] APPLICANT_MATCHERS = {
+            "/summary",
+            "/summary/**",
             "/contact",
             "/contact/**",
             "/education",

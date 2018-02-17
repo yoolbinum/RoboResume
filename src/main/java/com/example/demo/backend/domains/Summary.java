@@ -1,5 +1,7 @@
 package com.example.demo.backend.domains;
 
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +18,17 @@ public class Summary {
     @NotNull
     @Size(min=1)
     private String description;
+
+    @URL
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public long getId() {
         return id;

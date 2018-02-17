@@ -1,4 +1,4 @@
-package com.example.demo.component;
+package com.example.demo.utils;
 
 import com.example.demo.backend.domains.Role;
 import com.example.demo.backend.repositories.RoleRepository;
