@@ -14,13 +14,6 @@
     </strong></mark>
     <input type="text" th:field="*{username}" placeholder="Enter name"/><br />
 
-    Email
-    <mark><strong>
-    <span th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}">Email Error</span>
-    </strong></mark>
-    <input type="email" th:field="*{email}"  placeholder="Enter e-mail"/><br/>
-
     Password
     <mark><strong>
     <span th:if="${#fields.hasErrors('password')}"

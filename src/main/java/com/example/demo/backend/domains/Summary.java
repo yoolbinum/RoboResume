@@ -4,18 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-public class Resume {
-
+public class Summary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String name;
-
-    //private Contact contact;
-
+    @NotNull
+    @Size(min=1)
+    private String description;
 
     public long getId() {
         return id;
@@ -25,12 +25,11 @@ public class Resume {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
 }

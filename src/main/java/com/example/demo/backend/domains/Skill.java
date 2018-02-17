@@ -20,6 +20,7 @@ public class Skill {
     @Size(min=1)
     private String title;
 
+    @NotNull
     private String rating;
 
 

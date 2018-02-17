@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Title</title>
-    <div th:replace="base :: bootstrapHead"></div>
-</head>
+<head th:replace="common/base :: head"></head>
 <body>
-<div th:replace="base :: navlinks"></div>
+<nav th:replace="common/base :: navbar('')"></nav>
 
-<h2>Resume</h2>
+<h2>Summaries</h2>
+<table>
+    <tr>
+        <th>Description</th>
+    </tr>
+    <tr th:each="summary : ${summaries}">
+        <td th:text="${summary.description}"></td>
+        <br/>
+    </tr>
+</table>
+
+<h2>Contacts</h2>
 <table>
     <tr>
         <th>Name</th>
         <th>Email</th>
     </tr>
-    <tr th:each="resume : ${resumes}">
+    <tr th:each="contact : ${contacts}">
 
-        <td th:text="${resume.name}"></td>
-        <td th:text="${resume.email}"></td>
+        <td th:text="${contact.name}"></td>
+        <td th:text="${contact.email}"></td>
         <br/>
     </tr>
 </table>
@@ -67,6 +74,6 @@
         <td th:text="${skill.rating}"></td>
     </tr>
 </table>
-<div th:replace="base :: bootstrapBody"></div>
+<div th:replace="common/base :: jslinks"></div>
 </body>
 </html>

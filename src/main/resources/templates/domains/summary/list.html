@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('summary')"></nav>
+<h2>Summaries</h2>
+<table>
+    <tr th:each="summary : ${summaries}">
+        <td th:text="${summary.description}"></td>
+        <td>
+            <a th:href="@{/summary/update/{id}(id=${summary.id})}">Update</a> -
+            <a th:href="@{/summary/delete/{id}(id=${summary.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/summary/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

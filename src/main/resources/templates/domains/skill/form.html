@@ -14,9 +14,10 @@
     <span th:if="${#fields.hasErrors('title')}"
           th:errors="*{title}"></span><br/>
 
-    rating: <input type="number" th:field="*{rating}"/>
-    <span th:if="${#fields.hasErrors('rating')}"
-          th:errors="*{rating}"></span><br/>
+    Rating<br/>
+    Beginner <input type="radio" th:field="*{rating}" value="beginner"/>
+    Intermediate <input type="radio" th:field="*{rating}" value="intermediate"/>
+    Proficient <input type="radio" th:field="*{rating}" value="proficient"/><br/>
 
     <br/>
     <input type="submit" value="Submit"/>

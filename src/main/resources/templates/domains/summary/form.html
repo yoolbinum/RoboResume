@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('summary')"></nav>
+<form action="#"
+      th:action="@{/summary/process}"
+      th:object="${summary}"
+      method="post">
+    <input type="hidden" th:field="*{id}"/>
+
+
+    Summary: <input type="text" th:field="*{description}"/>
+    <span th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}"></span><br/>
+    <br/>
+    <input type="submit" value="Submit"/>
+
+
+</form>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

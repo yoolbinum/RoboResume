@@ -16,10 +16,6 @@ public class User {
     public long id;
 
     @NotEmpty
-    @Email
-    private String email;
-
-    @NotEmpty
     private String password;
 
     @NotEmpty
@@ -49,14 +45,6 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {

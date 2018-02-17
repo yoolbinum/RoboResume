@@ -10,13 +10,6 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/summary")
-    public String summary()
-
-    {
-        return "index";
-    }
-
     @RequestMapping("/reference")
     public String reference(){
         return "index";
