@@ -8,5 +8,5 @@ import java.util.Set;
 public interface UserRepository extends CrudRepository<User, Long>{
     User findUserByUsername(String username);
     Long countByUsername(String username);
-    Set<User> findByRole(String role);
+    Set<User> findUsersByRole(String role);
 }
