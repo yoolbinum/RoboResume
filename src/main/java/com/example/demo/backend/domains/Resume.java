@@ -13,6 +13,9 @@ public class Resume {
     private User applicant;
 
     @OneToOne
+    private Summary summary;
+
+    @OneToOne
     private Contact contact;
 
 
@@ -41,5 +44,13 @@ public class Resume {
 
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    public Summary getSummary() {
+        return summary;
+    }
+
+    public void setSummary(Summary summary) {
+        this.summary = summary;
     }
 }
