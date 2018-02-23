@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('job')"></nav>
+
+<h2>Job</h2>
+<h3>Name</h3>
+<div th:text="${job.name}"></div>
+<h3>Organization</h3>
+<div th:text="${job.organization}"></div>
+<h3>Required Skills</h3>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Rating</th>
+    </tr>
+    <tr th:each="skill : ${skills}">
+        <td th:text="${skill.title}"></td>
+        <td th:text="${skill.rating}"></td>
+    </tr>
+</table>
+
+<div th:replace="common/base :: jslinks"></div>
+
+</body>
+</html>
