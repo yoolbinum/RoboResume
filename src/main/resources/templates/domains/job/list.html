@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('job')"></nav>
+
+<h2>Job</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Organization</th>
+    </tr>
+    <tr th:each="job : ${jobs}">
+        <td th:text="${job.name}"></td>
+        <td th:text="${job.organization}"></td>
+        <td>
+            <a th:href="@{/job/update/{id}(id=${job.id})}">Update</a> -
+            <a th:href="@{/job/delete/{id}(id=${job.id})}">Delete</a>
+        </td>
+    </tr>
+    <a th:href="@{/job/add}">Create</a>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

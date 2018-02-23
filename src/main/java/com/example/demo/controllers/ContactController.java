@@ -21,9 +21,6 @@ import javax.validation.Valid;
 @Controller
 public class ContactController {
     @Autowired
-    ResumeRepository resumeRepository;
-
-    @Autowired
     ContactRepository contactRepository;
 
     @Autowired
@@ -55,18 +52,6 @@ public class ContactController {
         User user = userRepository.findUserByUsername(auth.getName());
         user.getResume().setContact(contact);
         userRepository.save(user);
-        return "redirect:" + contactURL;
-    }
-
-    @RequestMapping(contactURL + "/update/{id}")
-    public String updateEducation(@PathVariable("id") long id, Model model) {
-        model.addAttribute("contact", contactRepository.findOne(id));
-        return contactDir + "form";
-    }
-
-    @RequestMapping(contactURL + "/delete/{id}")
-    public String contactDelete(@PathVariable("id") long id) {
-        contactRepository.delete(id);
         return "redirect:" + contactURL;
     }
 }

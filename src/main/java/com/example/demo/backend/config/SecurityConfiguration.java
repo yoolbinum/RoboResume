@@ -28,11 +28,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/h2-console/**"
     };
 
-    private static final String[] APPLICANT_EMPLOYER_MATCHERS = {
+    private static final String[] PRIVATE_MATCHERS = {
             "/resume",
             "/letter",
             "/secure",
             "/",
+            "/job"
     };
 
     private static final String[] APPLICANT_MATCHERS = {
@@ -44,9 +45,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/education/**",
             "/experience",
             "/experience/**",
+            "/reference"
+    };
+
+    private static final String[] APPLICANT_RECRUITER_MATCHERS ={
             "/skill",
             "/skill/**",
-            "/reference"
     };
 
 
@@ -60,7 +64,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers(PUBLIC_MATCHERS).permitAll()
-                    .antMatchers(APPLICANT_EMPLOYER_MATCHERS).hasAnyAuthority("EMPLOYER", "APPLICANT")
+                    .antMatchers(PRIVATE_MATCHERS).hasAnyAuthority("EMPLOYER", "APPLICANT", "RECRUITER")
+                    .antMatchers(APPLICANT_RECRUITER_MATCHERS).hasAnyAuthority("APPLICANT", "RECRUITER")
                     .antMatchers(APPLICANT_MATCHERS).hasAuthority("APPLICANT")
                         .anyRequest().authenticated()
                         .and()

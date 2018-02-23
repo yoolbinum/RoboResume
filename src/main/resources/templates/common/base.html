@@ -24,24 +24,33 @@
                 <img src="http://vtaorgcontent.s3-us-west-1.amazonaws.com/Site_Content/the%20transit%20app" alt="home"
                      width="100" height="100"/>
             </a>
-            <li class="nav-item" th:classappend="(${active}=='summary')? 'active':''">
+            <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='summary')? 'active':''">
                 <a class="nav-link" th:href="@{/summary}">Summary</a>
             </li>
-            <li class="nav-item" th:classappend="(${active}=='contact')? 'active':''">
+            <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='contact')? 'active':''">
                 <a class="nav-link" th:href="@{/contact}">Contact Information</a>
             </li>
-            <li class="nav-item" th:classappend="(${active}=='education')? 'active':''">
+            <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='education')? 'active':''">
                 <a class="nav-link" th:href="@{/education}">Education</a>
             </li>
-            <li class="nav-item" th:classappend="(${active}=='skill')? 'active':''">
+            <li sec:authorize="hasAnyAuthority('RECRUITER', 'APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='skill')? 'active':''">
                 <a class="nav-link" th:href="@{/skill}">Skills</a>
             </li>
-            <li class="nav-item" th:classappend="(${active}=='experience')? 'active':''">
+            <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='experience')? 'active':''">
                 <a class="nav-link" th:href="@{/experience}">Experience</a>
             </li>
             <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
                 th:classappend="(${active}=='reference')? 'active':''">
                 <a class="nav-link" th:href="@{/reference}">References</a>
+            </li>
+            <li sec:authorize="hasAnyAuthority('RECRUITER', 'APPLICANT')" class="nav-item"
+                th:classappend="(${active}=='job')? 'active':''">
+                <a class="nav-link" th:href="@{/job}">Job</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"

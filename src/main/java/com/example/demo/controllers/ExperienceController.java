@@ -1,8 +1,11 @@
 package com.example.demo.controllers;
 
 import com.example.demo.backend.domains.Experience;
+import com.example.demo.backend.domains.User;
 import com.example.demo.backend.repositories.ExperienceRepository;
+import com.example.demo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,12 +21,16 @@ public class ExperienceController {
     @Autowired
     ExperienceRepository experienceRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     final private String expDir = "domains/experience/";
     final private String expURL = "/experience";
 
     @RequestMapping(expURL)
-    public String experienceList(Model model){
-        model.addAttribute("experiences", experienceRepository.findAll());
+    public String experienceList(Model model, Authentication auth){
+        User user = userRepository.findUserByUsername(auth.getName());
+        model.addAttribute("experiences", user.getResume().getExperiences());
         return expDir + "list";
     }
 
@@ -34,11 +41,14 @@ public class ExperienceController {
     }
 
     @PostMapping(expURL + "/process")
-    public String processForm(@Valid Experience experience, BindingResult result){
+    public String processForm(@Valid Experience experience, BindingResult result, Authentication auth){
         if(result.hasErrors()){
             return expDir + "form";
         }
         experienceRepository.save(experience);
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().addExperience(experience);
+        userRepository.save(user);
         return "redirect:" + expURL;
     }
 
@@ -49,8 +59,10 @@ public class ExperienceController {
     }
 
     @RequestMapping(expURL + "/delete/{id}")
-    public String experienceDelete(@PathVariable("id") long id) {
-        experienceRepository.delete(id);
+    public String experienceDelete(@PathVariable("id") long id, Authentication auth) {
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().removeExperience(experienceRepository.findOne(id));
+        userRepository.save(user);
         return "redirect:" + expURL;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.backend.domains.Job;
 import com.example.demo.backend.domains.Resume;
 import com.example.demo.backend.domains.Role;
 import com.example.demo.backend.domains.User;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 
 @Controller
 public class SecurityContorller {
@@ -51,6 +53,8 @@ public class SecurityContorller {
             user.addRole(r);
             if(user.getRole().equalsIgnoreCase("APPLICANT")){
                 user.setResume(new Resume());
+            }else if(user.getRole().equalsIgnoreCase("RECRUITER")){
+                user.setPostingJobs(new HashSet<Job>());
             }
             userRepository.save(user);
         }

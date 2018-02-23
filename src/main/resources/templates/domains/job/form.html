@@ -5,35 +5,31 @@
 <nav th:replace="common/base :: navbar('job')"></nav>
 <form action="#"
       th:action="@{/job/process}"
-      th:object="${job}"
       method="post">
-    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{job.id}"/>
 
 
-    Title: <input type="text" th:field="*{title}"/>
-    <span th:if="${#fields.hasErrors('title')}"
+    Name: <input type="text" th:field="*{job.name}"/>
+    <span th:if="${#fields.hasErrors('job.name')}"
+          th:errors="*{job.name}"></span><br/>
+
+    Organization: <input type="text" th:field="*{job.organization}"/>
+    <span th:if="${#fields.hasErrors('job.organization')}"
+          th:errors="*{job.organization}"></span><br/>
+
+
+    Required Skill<br />
+    <input type="hidden" th:field="*{skill.id}"/>
+
+    Title: <input type="text" th:field="*{skill.title}"/>
+    <span th:if="${#fields.hasErrors('skill.title')}"
           th:errors="*{title}"></span><br/>
 
-    Organization: <input type="text" th:field="*{organization}"/>
-    <span th:if="${#fields.hasErrors('organization')}"
-          th:errors="*{organization}"></span><br/>
+    Rating<br/>
+    Beginner <input type="radio" th:field="*{skill.rating}" value="beginner"/>
+    Intermediate <input type="radio" th:field="*{skill.rating}" value="intermediate"/>
+    Proficient <input type="radio" th:field="*{skill.rating}" value="proficient"/><br/>
 
-    Select Required Skills<br />
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Rating</th>
-        </tr>
-        <tr th:each="skill : ${skills}">
-            <td th:text="${skill.title}"></td>
-            <td th:text="${skill.rating}"></td>
-            <td>
-                <a th:href="@{/skill/update/{id}(id=${skill.id})}">Update</a> -
-                <a th:href="@{/skill/delete/{id}(id=${skill.id})}">Delete</a>
-            </td>
-        </tr>
-        <a th:href="@{/skill/add}">Create</a>
-    </table>
 
     <br/>
     <input type="submit" value="Submit"/>

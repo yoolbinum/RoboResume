@@ -1,8 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.backend.domains.Summary;
+import com.example.demo.backend.domains.User;
+import com.example.demo.backend.repositories.ResumeRepository;
 import com.example.demo.backend.repositories.SummaryRepository;
+import com.example.demo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,41 +20,37 @@ import javax.validation.Valid;
 @Controller
 public class SummaryController {
     @Autowired
-    SummaryRepository SummaryRepository;
+    SummaryRepository summaryRepository;
 
-    final private String SummaryDir = "domains/summary/";
-    final private String SummaryURL = "/summary";
+    @Autowired
+    UserRepository userRepository;
 
-    @RequestMapping(SummaryURL)
-    public String SummaryList(Model model){
-        model.addAttribute("summaries", SummaryRepository.findAll());
-        return SummaryDir + "list";
+    final private String summaryDir = "domains/summary/";
+    final private String summaryURL = "/summary";
+
+    @RequestMapping(summaryURL)
+    public String SummaryList(Model model, Authentication auth){
+        User user = userRepository.findUserByUsername(auth.getName());
+        Summary summary = user.getResume().getSummary();
+        model.addAttribute("summary", summary);
+        return summaryDir + "list";
     }
 
-    @GetMapping(SummaryURL + "/add")
+    @GetMapping(summaryURL + "/add")
     public String SummaryForm(Model model){
         model.addAttribute("summary", new Summary());
-        return SummaryDir + "form";
+        return summaryDir + "form";
     }
 
-    @PostMapping(SummaryURL + "/process")
-    public String processForm(@Valid Summary Summary, BindingResult result){
+    @PostMapping(summaryURL + "/process")
+    public String processForm(@Valid Summary summary, BindingResult result, Authentication auth){
         if(result.hasErrors()){
-            return SummaryDir + "form";
+            return summaryDir + "form";
         }
-        SummaryRepository.save(Summary);
-        return "redirect:" + SummaryURL;
-    }
-
-    @RequestMapping(SummaryURL+ "/update/{id}")
-    public String updateSummary(@PathVariable("id") long id, Model model){
-        model.addAttribute("summary", SummaryRepository.findOne(id));
-        return SummaryDir+ "form";
-    }
-
-    @RequestMapping(SummaryURL +"/delete/{id}")
-    public String SummaryDelete(@PathVariable("id") long id) {
-        SummaryRepository.delete(id);
-        return "redirect:" + SummaryURL;
+        summaryRepository.save(summary);
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().setSummary(summary);
+        userRepository.save(user);
+        return "redirect:" + summaryURL;
     }
 }

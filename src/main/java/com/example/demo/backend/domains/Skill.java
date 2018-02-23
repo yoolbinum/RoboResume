@@ -1,14 +1,14 @@
 package com.example.demo.backend.domains;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Skill {
@@ -22,6 +22,9 @@ public class Skill {
 
     @NotNull
     private String rating;
+
+    @ManyToMany(mappedBy = "requiredSkills")
+    private Set<Job> matchedJobs;
 
 
     public long getId() {
@@ -46,5 +49,13 @@ public class Skill {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public Set<Job> getMatchedJobs() {
+        return matchedJobs;
+    }
+
+    public void setMatchedJobs(Set<Job> matchedJobs) {
+        this.matchedJobs = matchedJobs;
     }
 }

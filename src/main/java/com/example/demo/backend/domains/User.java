@@ -33,6 +33,9 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Job> postingJobs;
+
     public String getRole() {
         return role;
     }
@@ -87,5 +90,13 @@ public class User {
 
     public void addRole(Role r) {
         this.roles.add(r);
+    }
+
+    public Set<Job> getPostingJobs() {
+        return postingJobs;
+    }
+
+    public void setPostingJobs(Set<Job> postingJobs) {
+        this.postingJobs = postingJobs;
     }
 }

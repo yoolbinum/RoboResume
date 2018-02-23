@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('')"></nav>
+<h2>Resumes</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Detail</th>
+    </tr>
+    <tr th:each="applicant : ${applicants}">
+        <td th:text="${applicant.resume.contact.name}"></td>
+        <td th:text="${applicant.resume.contact.email}"></td>
+        <td>
+            <a th:href="@{/resume/detail/{id}(id=${applicant.id})}">Detail</a>
+        </td>
+    </tr>
+</table>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>

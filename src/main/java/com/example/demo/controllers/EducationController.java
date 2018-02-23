@@ -1,8 +1,11 @@
 package com.example.demo.controllers;
 
 import com.example.demo.backend.domains.Education;
+import com.example.demo.backend.domains.User;
 import com.example.demo.backend.repositories.EducationRepository;
+import com.example.demo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,12 +21,17 @@ public class EducationController {
     @Autowired
     EducationRepository educationRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     final private String educationDir = "domains/education/";
     final private String eduURL = "/education";
 
+
     @RequestMapping(eduURL)
-    public String educationList(Model model) {
-        model.addAttribute("educations", educationRepository.findAll());
+    public String educationList(Model model, Authentication auth) {
+        User user = userRepository.findUserByUsername(auth.getName());
+        model.addAttribute("educations", user.getResume().getEducations());
         return educationDir + "list";
     }
 
@@ -34,11 +42,14 @@ public class EducationController {
     }
 
     @PostMapping(eduURL + "/process")
-    public String processForm(@Valid Education education, BindingResult result) {
+    public String processForm(@Valid Education education, BindingResult result, Authentication auth) {
         if (result.hasErrors()) {
             return educationDir + "form";
         }
         educationRepository.save(education);
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().addEducation(education);
+        userRepository.save(user);
         return "redirect:" + eduURL;
     }
 
@@ -49,8 +60,10 @@ public class EducationController {
     }
 
     @RequestMapping(eduURL + "/delete/{id}")
-    public String educationDelete(@PathVariable("id") long id) {
-        educationRepository.delete(id);
+    public String educationDelete(@PathVariable("id") long id, Authentication auth) {
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().removeEducation(educationRepository.findOne(id));
+        userRepository.save(user);
         return "redirect:" + eduURL;
     }
 }
