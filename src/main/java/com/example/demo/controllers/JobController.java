@@ -41,7 +41,16 @@ public class JobController {
         if (user.getRole().equalsIgnoreCase("RECRUITER")) {
             jobs = user.getPostingJobs();
         } else if (user.getRole().equalsIgnoreCase("APPLICANT")) {
-            jobs.addAll(jobRepository.findByRequiredSkills(user.getResume().getSkills()));
+            Set<Skill> skills = user.getResume().getSkills();
+            for(Job job : jobRepository.findAll()){
+                Object[] skillArray =  job.getRequiredSkills().toArray();
+                Skill jobSkill = (Skill)skillArray[0];
+                for(Skill skill : skills){
+                    if(jobSkill.getTitle().equalsIgnoreCase(skill.getTitle())){
+                        jobs.add(job);
+                    }
+                }
+            }
         }
         model.addAttribute("jobs", jobs);
         return jobDir + "list";
@@ -84,5 +93,15 @@ public class JobController {
         user.getPostingJobs().remove(jobRepository.findOne(id));
         userRepository.save(user);
         return "redirect:" + jobURL;
+    }
+
+    @RequestMapping(jobURL + "/detail/{id}")
+    public String jobDetail(@PathVariable("id") long id, Model model) {
+        Job job = jobRepository.findOne(id);
+        model.addAttribute("job", job);
+        Object[] skillArray =  job.getRequiredSkills().toArray();
+        Skill skill = (Skill)skillArray[0];
+        model.addAttribute("skills", skill);
+        return jobDir + "detail";
     }
 }

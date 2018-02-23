@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Set;
 
 public interface JobRepository extends CrudRepository<Job, Long> {
-    Set<Job> findByRequiredSkills(Set<Skill> skills);
+    Set<Job> findByRequiredSkillsContains(Skill skill);
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
 <head th:replace="common/base :: head"></head>
 <body>
 <nav th:replace="common/base :: navbar('job')"></nav>
@@ -13,12 +14,13 @@
     <tr th:each="job : ${jobs}">
         <td th:text="${job.name}"></td>
         <td th:text="${job.organization}"></td>
-        <td>
+        <td sec:authorize="hasAuthority('RECRUITER')">
             <a th:href="@{/job/update/{id}(id=${job.id})}">Update</a> -
-            <a th:href="@{/job/delete/{id}(id=${job.id})}">Delete</a>
+            <a th:href="@{/job/delete/{id}(id=${job.id})}">Delete</a> -
         </td>
+        <a th:href="@{/job/detail/{id}(id=${job.id})}">Detail</a>
     </tr>
-    <a th:href="@{/job/add}">Create</a>
+    <a sec:authorize="hasAuthority('RECRUITER')" th:href="@{/job/add}">Create</a>
 </table>
 <div th:replace="common/base :: jslinks"></div>
 </body>
