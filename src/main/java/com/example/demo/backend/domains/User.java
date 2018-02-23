@@ -10,9 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long id;
 
     @NotEmpty
@@ -21,10 +22,15 @@ public class User {
     @NotEmpty
     private String username;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "resume_id")
+    private Resume resume;
+
+    //temporary variable in registration form
     @NotEmpty
     private String role;
 
-    @ManyToMany(fetch= FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public String getRole() {
@@ -45,6 +51,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
     }
 
     public String getPassword() {
@@ -71,8 +85,7 @@ public class User {
         this.roles = roles;
     }
 
-    public void addRole(Role r)
-    {
+    public void addRole(Role r) {
         this.roles.add(r);
     }
 }

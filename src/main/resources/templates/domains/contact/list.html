@@ -4,21 +4,14 @@
 <body>
 <nav th:replace="common/base :: navbar('contact')"></nav>
 <h2>Contact</h2>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-    </tr>
-    <tr th:each="contact : ${contacts}">
-        <td th:text="${contact.name}"></td>
-        <td th:text="${contact.email}"></td>
-        <td>
-            <a th:href="@{/contact/update/{id}(id=${contact.id})}">Update</a> -
-            <a th:href="@{/contact/delete/{id}(id=${contact.id})}">Delete</a>
-        </td>
-    </tr>
+<div th:if="${contact != null}">
+    <div th:text="${contact.name}"></div>
+    <div th:text="${contact.email}"></div>
+    <a th:href="@{/contact/add}">Edit</a>
+</div>
+<div th:if="${contact == null}">
     <a th:href="@{/contact/add}">Create</a>
-</table>
+</div>
 <div th:replace="common/base :: jslinks"></div>
 </body>
 </html>

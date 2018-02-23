@@ -24,7 +24,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserRepository userRepository;
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/register"
+            "/register",
+            "/h2-console/**"
     };
 
     private static final String[] APPLICANT_EMPLOYER_MATCHERS = {
@@ -32,7 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/letter",
             "/secure",
             "/",
-            "/h2-console/**"
     };
 
     private static final String[] APPLICANT_MATCHERS = {

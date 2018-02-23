@@ -1,5 +1,6 @@
 package com.example.demo.backend.services;
 
+import com.example.demo.backend.domains.Resume;
 import com.example.demo.backend.domains.Role;
 import com.example.demo.backend.domains.User;
 import com.example.demo.backend.repositories.UserRepository;
@@ -31,7 +32,7 @@ public class SSUserDetailsService implements UserDetailsService{
             {
                 throw new UsernameNotFoundException(username+" not found");
             }
-            System.out.println(user.getUsername()+" is granted access");
+
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),getAuthorities(user));
 
 

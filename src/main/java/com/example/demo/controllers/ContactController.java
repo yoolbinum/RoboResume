@@ -1,8 +1,13 @@
 package com.example.demo.controllers;
 
 import com.example.demo.backend.domains.Contact;
+import com.example.demo.backend.domains.Resume;
+import com.example.demo.backend.domains.User;
 import com.example.demo.backend.repositories.ContactRepository;
+import com.example.demo.backend.repositories.ResumeRepository;
+import com.example.demo.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +21,22 @@ import javax.validation.Valid;
 @Controller
 public class ContactController {
     @Autowired
+    ResumeRepository resumeRepository;
+
+    @Autowired
     ContactRepository contactRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     final private String contactDir = "domains/contact/";
     final private String contactURL = "/contact";
 
     @RequestMapping(contactURL)
-    public String contactList(Model model) {
-        model.addAttribute("contacts", contactRepository.findAll());
+    public String contactList(Model model, Authentication auth) {
+        User user = userRepository.findUserByUsername(auth.getName());
+        Contact contact = user.getResume().getContact();
+        model.addAttribute("contact", contact);
         return contactDir + "list";
     }
 
@@ -34,11 +47,14 @@ public class ContactController {
     }
 
     @PostMapping(contactURL + "/process")
-    public String processForm(@Valid Contact contact, BindingResult result) {
+    public String processForm(@Valid Contact contact, BindingResult result, Authentication auth) {
         if (result.hasErrors()) {
             return contactDir + "form";
         }
         contactRepository.save(contact);
+        User user = userRepository.findUserByUsername(auth.getName());
+        user.getResume().setContact(contact);
+        userRepository.save(user);
         return "redirect:" + contactURL;
     }
 

@@ -3,10 +3,7 @@ package com.example.demo.backend.domains;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Contact {
@@ -15,12 +12,12 @@ public class Contact {
     private long id;
 
     @NotEmpty
-
     private String name;
 
     @Email
     @NotEmpty
     private String email;
+
 
     public long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.backend.domains.Resume;
 import com.example.demo.backend.domains.Role;
 import com.example.demo.backend.domains.User;
 import com.example.demo.backend.repositories.RoleRepository;
@@ -47,8 +48,10 @@ public class SecurityContorller {
         }else{
             model.addAttribute(user.getUsername()+" created");
             Role r = roleRepository.findByRole(user.getRole());
-            userRepository.save(user);
             user.addRole(r);
+            if(user.getRole().equalsIgnoreCase("APPLICANT")){
+                user.setResume(new Resume());
+            }
             userRepository.save(user);
         }
 

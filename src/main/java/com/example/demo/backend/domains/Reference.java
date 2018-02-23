@@ -4,10 +4,9 @@ package com.example.demo.backend.domains;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Reference {
@@ -15,12 +14,8 @@ public class Reference {
     @Id
     private long id;
 
-    @NotEmpty
-    private String name;
-
-    @Email
-    @NotEmpty
-    private String email;
+    @OneToMany
+    private Set<Contact> contacts = new HashSet<>();
 
     public long getId() {
         return id;
@@ -30,19 +25,12 @@ public class Reference {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    public Set<Contact> getContacts() {
+        return contacts;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts = contacts;
     }
 }
