@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -103,5 +104,20 @@ public class JobController {
         Skill skill = (Skill)skillArray[0];
         model.addAttribute("skills", skill);
         return jobDir + "detail";
+    }
+
+    @GetMapping(jobURL + "/search")
+    public String getSearch()
+    {
+        return jobDir + "search";
+    }
+
+    @PostMapping(jobURL + "/search")
+    public String showSearchResults(HttpServletRequest request, Model model)
+    {
+        //Get the search string from the result form
+        String searchString = request.getParameter("search");
+        model.addAttribute("jobs",jobRepository.findAllByOrganizationContainingIgnoreCase(searchString));
+        return jobDir + "list";
     }
 }

@@ -36,7 +36,7 @@
                 th:classappend="(${active}=='education')? 'active':''">
                 <a class="nav-link" th:href="@{/education}">Education</a>
             </li>
-            <li sec:authorize="hasAnyAuthority('RECRUITER', 'APPLICANT')" class="nav-item"
+            <li sec:authorize="hasAuthority('APPLICANT')" class="nav-item"
                 th:classappend="(${active}=='skill')? 'active':''">
                 <a class="nav-link" th:href="@{/skill}">Skills</a>
             </li>

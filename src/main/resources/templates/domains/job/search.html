@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="common/base :: head"></head>
+<body>
+<nav th:replace="common/base :: navbar('job')"></nav>
+
+<body>
+<div class="container">
+    <h1 class="text-center">Search Job</h1>
+    <div class="col-md-6 col-md-offset-3">
+        <form th:action="@{/job/search}" method="post">
+            <div>Enter a <span class="text-success">job organization</span> to search for </div>
+            <label>Organization name: </label><input type="text" name="search"/>
+        </form>
+    </div>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</div>
+</body>
+<div th:replace="common/base :: jslinks"></div>
+</body>
+</html>
